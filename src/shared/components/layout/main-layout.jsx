@@ -28,6 +28,12 @@ const MainLayout = () => {
             case '3':
                 navigate('/app/part');
                 break;
+            case '4':
+                navigate('/app/dealership');
+                break;
+            case '5':
+                navigate('/app/user');
+                break;
             default:
                 break;
         }
@@ -60,14 +66,14 @@ const MainLayout = () => {
                                 label: 'Suku Cadang',
                             },
                             {
-                                key: '3',
-                                icon: <UserOutlined />,
-                                label: 'Daftar Pengguna',
-                            },
-                            {
                                 key: '4',
                                 icon: <TeamOutlined />,
                                 label: 'Daftar Dealer',
+                            },
+                            {
+                                key: '5',
+                                icon: <UserOutlined />,
+                                label: 'Daftar Pengguna',
                             },
                         ]}
                     />

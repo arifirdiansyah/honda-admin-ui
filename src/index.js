@@ -29,9 +29,10 @@ root.render(
         <React.StrictMode>
             <React.StrictMode>
                 <Provider store={store}>
-                    <Auth0Provider {...providerConfig}>
-                        <RouterProvider router={router} />
-                    </Auth0Provider>
+                  {/*  <Auth0Provider {...providerConfig}>
+
+                    </Auth0Provider>*/}
+                    <RouterProvider router={router} />
                 </Provider>
             </React.StrictMode>
         </React.StrictMode>

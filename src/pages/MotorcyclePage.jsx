@@ -10,7 +10,6 @@ import {
 import MotorcycleColumns from "../shared/helper/MotorcycleTable";
 import { getAllCatalogs } from "../shared/services/catalogService";
 import { ReloadOutlined } from "@ant-design/icons";
-import { withAuthenticationRequired } from "@auth0/auth0-react";
 
 
 const MotorcyclePage = () => {
@@ -169,4 +168,4 @@ const MotorcyclePage = () => {
     </>);
 }
 
-export default withAuthenticationRequired(MotorcyclePage);
+export default MotorcyclePage;
