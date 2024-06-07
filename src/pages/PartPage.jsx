@@ -10,7 +10,6 @@ import {
 import PartColumns from "../shared/helper/PartTable";
 import { getAllCatalogs } from "../shared/services/catalogService";
 import { ReloadOutlined } from "@ant-design/icons";
-import { withAuthenticationRequired } from "@auth0/auth0-react";
 
 
 const PartPage = () => {
@@ -170,4 +169,4 @@ const PartPage = () => {
     </>);
 }
 
-export default withAuthenticationRequired(PartPage);
+export default PartPage;

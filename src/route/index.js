@@ -4,6 +4,8 @@ import MotorcyclePage from "../pages/MotorcyclePage";
 import MainLayout from "../shared/components/layout/main-layout";
 import PartPage from "../pages/PartPage";
 import AuthRedirection from "../shared/components/AuthRedirection";
+import UserPage from "../pages/UserPage";
+import DealershipPage from "../pages/DealershipPage";
 
 const router = createBrowserRouter([
     {
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
             {
                 path: "part",
                 element: <PartPage/>,
+            },
+            {
+                path: "dealership",
+                element: <DealershipPage/>,
+            },
+            {
+                path: "user",
+                element: <UserPage/>,
             },
         ]
     },

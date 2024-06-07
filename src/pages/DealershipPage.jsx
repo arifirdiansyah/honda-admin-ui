@@ -1,58 +1,67 @@
-import CatalogColumns from "../shared/helper/CatalogTable";
-import { Button, Form, Input, Modal, Select, Table } from "antd";
+import DealershipColumns from "../shared/helper/DealershipTable";
+import { Button, Divider, Form, Input, Modal, Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import {
-    addCatalogData,
-    deleteCatalogData,
-    getAllCatalogs,
-    updateCatalogData
-} from "../shared/services/catalogService";
+    addDealershipData,
+    deleteDealershipData,
+    getAllDealerships,
+    updateDealershipData
+} from "../shared/services/dealershipService";
 import { ReloadOutlined } from "@ant-design/icons";
 
-const CatalogPage = () => {
+const DealershipPage = () => {
     const dispatch = useDispatch();
-    const [formCatalog] = Form.useForm();
-    const catalog = useSelector(state => state.CatalogueReducer);
-    const [catalogModal, setCatalogModal] = useState({ modalOpen: false, data: null });
+    const [formDealership] = Form.useForm();
+    const dealership = useSelector(state => state.DealershipReducer);
+    const [dealershipModal, setDealershipModal] = useState({ modalOpen: false, data: null });
 
-    const showCatalogModal = (catalogData) => {
-        formCatalog.setFieldsValue({
-            modelName: catalogData ? catalogData.modelName : '',
-            transmission: catalogData ? catalogData.transmission : '',
-            picture: catalogData ? catalogData.picture : '',
-            engine: catalogData ? catalogData.engine : '',
-            frame: catalogData ? catalogData.frame : '',
+    const showDealershipModal = (dealershipData) => {
+        formDealership.setFieldsValue({
+            name: dealershipData && dealershipData.name ? dealershipData.name : '',
+            provinces: dealershipData && dealershipData.address ? dealershipData.address.provinces : '',
+            city: dealershipData && dealershipData.address ? dealershipData.address.city : '',
+            subdistrict: dealershipData && dealershipData.address ? dealershipData.address.subdistrict : '',
+            urbanVillage: dealershipData && dealershipData.address ? dealershipData.address.urbanVillage : ''
         })
-        setCatalogModal({ modalOpen: true, data: catalogData });
+        setDealershipModal({ modalOpen: true, data: dealershipData });
     };
 
     const handleCancelModal = () => {
-        setCatalogModal({ modalOpen: false, data: null });
+        setDealershipModal({ modalOpen: false, data: null });
     };
 
-    const submitFormCatalog = (value) => {
-        if (catalogModal.data) {
-            dispatch(updateCatalogData(value, catalogModal.data));
-        } else {
-            dispatch(addCatalogData(value));
+    const submitFormDealership = (value) => {
+        const dealerModel = {
+            name: value.name,
+            address: {
+                provinces: value.provinces,
+                city: value.city,
+                subdistrict: value.subdistrict,
+                urbanVillage: value.urbanVillage
+            }
         }
-        setCatalogModal({ modalOpen: false, data: null });
+        if (dealershipModal.data) {
+            dispatch(updateDealershipData(dealerModel, dealershipModal.data));
+        } else {
+            dispatch(addDealershipData(dealerModel));
+        }
+        setDealershipModal({ modalOpen: false, data: null });
     }
 
-    const handleDeleteCatalog = (data) => {
-        dispatch(deleteCatalogData(data));
+    const handleDeleteDealership = (data) => {
+        dispatch(deleteDealershipData(data));
     }
 
     useEffect(() => {
-        dispatch(getAllCatalogs());
+        dispatch(getAllDealerships());
     }, [dispatch]);
 
     return (
         <>
-            <Modal title={catalogModal.data ? 'Perbaharui Katalog' : 'Tambah Katalog'}
-                   open={catalogModal.modalOpen}
-                   onOk={() => formCatalog.submit()}
+            <Modal title={dealershipModal.data ? 'Perbaharui Dealer' : 'Tambah Dealer'}
+                   open={dealershipModal.modalOpen}
+                   onOk={() => formDealership.submit()}
                    okText="Simpan"
                    cancelText="Batalkan"
                    onCancel={handleCancelModal}>
@@ -60,13 +69,26 @@ const CatalogPage = () => {
                     <Form
                         name="basic"
                         layout="vertical"
-                        form={formCatalog}
+                        form={formDealership}
                         autoComplete="off"
-                        onFinish={submitFormCatalog}
+                        onFinish={submitFormDealership}
                     >
                         <Form.Item
-                            label="Nama Katalog"
-                            name="modelName"
+                            label="Nama Dealer"
+                            name="name"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Tidak boleh kosong!',
+                                },
+                            ]}
+                        >
+                            <Input size="large"/>
+                        </Form.Item>
+                        <Divider>Alamat</Divider>
+                        <Form.Item
+                            label="Provinsi"
+                            name="provinces"
                             rules={[
                                 {
                                     required: true,
@@ -78,37 +100,8 @@ const CatalogPage = () => {
                         </Form.Item>
 
                         <Form.Item
-                            label="Transmisi"
-                            name="transmission"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Tidak boleh kosong!',
-                                },
-                            ]}
-                        >
-                            <Select size="large">
-                                <Select.Option value="AUTOMATIC">Automatic</Select.Option>
-                                <Select.Option value="MANUAL">Manual</Select.Option>
-                            </Select>
-                        </Form.Item>
-
-                        <Form.Item
-                            label="Kapasitas Mesin"
-                            name="engine"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Tidak boleh kosong!',
-                                },
-                            ]}
-                        >
-                            <Input size="large" type="number"/>
-                        </Form.Item>
-
-                        <Form.Item
-                            label="Nama Rangka"
-                            name="frame"
+                            label="Kota/Kabupaten"
+                            name="city"
                             rules={[
                                 {
                                     required: true,
@@ -120,8 +113,8 @@ const CatalogPage = () => {
                         </Form.Item>
 
                         <Form.Item
-                            label="Foto Katalog"
-                            name="picture"
+                            label="Kecamatan"
+                            name="subdistrict"
                             rules={[
                                 {
                                     required: true,
@@ -131,6 +124,20 @@ const CatalogPage = () => {
                         >
                             <Input size="large"/>
                         </Form.Item>
+
+                        <Form.Item
+                            label="Desa"
+                            name="urbanVillage"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Tidak boleh kosong!',
+                                },
+                            ]}
+                        >
+                            <Input size="large"/>
+                        </Form.Item>
+
                     </Form>
                 </div>
             </Modal>
@@ -143,10 +150,10 @@ const CatalogPage = () => {
                         marginBottom: 16,
                     }}
                     onClick={() => {
-                        showCatalogModal(null)
+                        showDealershipModal(null)
                     }}
                 >
-                    Tambah Katalog
+                    Tambah Dealer
                 </Button>
                 <Button
                     type="default"
@@ -154,14 +161,14 @@ const CatalogPage = () => {
                         marginLeft: 10,
                     }}
                     onClick={() => {
-                        dispatch(getAllCatalogs())
+                        dispatch(getAllDealerships())
                     }} icon={<ReloadOutlined/>}/>
 
             </div>
             <Table
-                columns={CatalogColumns(showCatalogModal, handleDeleteCatalog)}
-                dataSource={catalog.catalogs}
-                loading={catalog.isLoading}
+                columns={DealershipColumns(showDealershipModal, handleDeleteDealership)}
+                dataSource={dealership.dealerships}
+                loading={dealership.isLoading}
                 pagination={{
                     pageSize: 50,
                 }}
@@ -173,4 +180,4 @@ const CatalogPage = () => {
     );
 }
 
-export default CatalogPage;
+export default DealershipPage;

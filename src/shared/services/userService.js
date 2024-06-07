@@ -22,46 +22,19 @@ export function getAllUsers() {
     }
 }
 
-export function addCatalogData(catalog) {
-    return async (dispatch, getState) => {
-        try {
-            dispatch({ type: UserAction.ADD_USER_REQUESTED })
-            const response = await axios.post(`${process.env.REACT_APP_API_URL}/catalog/add`, catalog);
-            dispatch({ type: UserAction.ADD_USER_SUCCESS, payload: { item: response.data } })
-            message.success("Katalog berhasil ditambah");
-        } catch ( error ) {
-            message.error("Gagal menambah pengguna");
-        }
-    }
-}
-
-export function updateCatalogData(newCatalogData, catalog) {
+export function updateUserData(newUserData, user) {
     return async (dispatch, getState) => {
         try {
             dispatch({ type: UserAction.UPDATE_USER_REQUESTED })
-            await axios.put(`${process.env.REACT_APP_API_URL}/catalog/update/${catalog.id}`, newCatalogData);
-            const updatedCatalog = {
-                ...catalog,
-                ...newCatalogData
+            await axios.put(`${process.env.REACT_APP_API_URL}/user/update/${user.id}`, newUserData);
+            const updatedUser = {
+                ...user,
+                ...newUserData
             }
-            dispatch({ type: UserAction.UPDATE_USER_SUCCESS, payload: { item: updatedCatalog } });
+            dispatch({ type: UserAction.UPDATE_USER_SUCCESS, payload: { item: updatedUser } });
             message.success("Katalog berhasil diubah");
         } catch ( error ) {
             message.error("Gagal mengubah pengguna");
         }
     }
 }
-
-export function deleteCatalogData(catalog) {
-    return async (dispatch, getState) => {
-        try {
-            dispatch({ type: UserAction.DELETE_USER_REQUESTED })
-            await axios.delete(`${process.env.REACT_APP_API_URL}/catalog/${catalog.id}`);
-            dispatch({ type: UserAction.DELETE_USER_SUCCESS, payload: { item: catalog } })
-            message.success("Katalog berhasil dihapus");
-        } catch ( error ) {
-            message.error("Gagal menghapus pengguna");
-        }
-    }
-}
-

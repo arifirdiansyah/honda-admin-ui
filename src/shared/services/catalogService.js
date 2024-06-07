@@ -5,6 +5,7 @@ import { message } from 'antd';
 export function getAllCatalogs() {
     return async (dispatch, getState) => {
         try {
+            console.log(`${process.env.REACT_APP_API_URL}/catalogs`);
             dispatch({ type: CatalogAction.LOAD_CATALOG_REQUESTED })
             const response = await axios.get(`${process.env.REACT_APP_API_URL}/catalogs`);
 
