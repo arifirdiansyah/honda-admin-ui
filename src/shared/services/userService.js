@@ -1,12 +1,12 @@
-import axios from "axios";
 import { message } from 'antd';
 import UserAction from "../../redux/user/UserAction";
+import axiosHttp from "../../axiosHandler";
 
 export function getAllUsers() {
     return async (dispatch, getState) => {
         try {
             dispatch({ type: UserAction.LOAD_USER_REQUESTED });
-            const response = await axios.get(`${process.env.REACT_APP_API_URL}/users`);
+            const response = await axiosHttp.get(`${process.env.REACT_APP_API_URL}/users`);
 
             dispatch({
                 type: UserAction.LOAD_USER_SUCCESS, payload: {
@@ -26,7 +26,7 @@ export function updateUserData(newUserData, user) {
     return async (dispatch, getState) => {
         try {
             dispatch({ type: UserAction.UPDATE_USER_REQUESTED })
-            await axios.put(`${process.env.REACT_APP_API_URL}/user/update/${user.id}`, newUserData);
+            await axiosHttp.put(`${process.env.REACT_APP_API_URL}/user/update/${user.id}`, newUserData);
             const updatedUser = {
                 ...user,
                 ...newUserData
@@ -35,6 +35,18 @@ export function updateUserData(newUserData, user) {
             message.success("Katalog berhasil diubah");
         } catch ( error ) {
             message.error("Gagal mengubah pengguna");
+        }
+    }
+}
+
+export function loadCurrentUser() {
+    return async (dispatch, getState) => {
+        try {
+            dispatch({ type: UserAction.LOAD_CURRENT_USER_REQUESTED })
+            const response = await axiosHttp.get(`${process.env.REACT_APP_API_URL}/user/my-info`);
+            dispatch({ type: UserAction.LOAD_CURRENT_USER_SUCCESS, payload: { user: response.data } });
+        } catch ( error ) {
+            message.error("Gagal memuat user info");
         }
     }
 }

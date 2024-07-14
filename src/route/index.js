@@ -6,8 +6,15 @@ import PartPage from "../pages/PartPage";
 import AuthRedirection from "../shared/components/AuthRedirection";
 import UserPage from "../pages/UserPage";
 import DealershipPage from "../pages/DealershipPage";
+import { ServicePackagePage } from "../pages/ServicePackagePage";
+import { ServicePage } from "../pages/ServicePage";
+import HomePage from "../pages/HomePage";
 
 const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <HomePage/>
+    },
     {
         path: "/app",
         element: <MainLayout/>,
@@ -35,8 +42,22 @@ const router = createBrowserRouter([
         ]
     },
     {
+        path: "/dealership",
+        element: <MainLayout/>,
+        children: [
+            {
+                path: "service-package",
+                element: <ServicePackagePage/>,
+            },
+            {
+                path: "service",
+                element: <ServicePage/>,
+            },
+        ]
+    },
+    {
         path: "/auth/callback",
-        element: <AuthRedirection />,
+        element: <AuthRedirection/>,
     },
 ]);
 
