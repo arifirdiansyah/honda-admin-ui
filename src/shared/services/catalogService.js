@@ -1,13 +1,13 @@
-import axios from "axios";
 import CatalogAction from "../../redux/catalog/CatalogAction";
 import { message } from 'antd';
+import axiosHttp from "../../axiosHandler";
 
 export function getAllCatalogs() {
     return async (dispatch, getState) => {
         try {
             console.log(`${process.env.REACT_APP_API_URL}/catalogs`);
             dispatch({ type: CatalogAction.LOAD_CATALOG_REQUESTED })
-            const response = await axios.get(`${process.env.REACT_APP_API_URL}/catalogs`);
+            const response = await axiosHttp.get(`${process.env.REACT_APP_API_URL}/catalogs`);
 
             dispatch({
                 type: CatalogAction.LOAD_CATALOG_SUCCESS, payload: {
@@ -27,7 +27,7 @@ export function addCatalogData(catalog) {
     return async (dispatch, getState) => {
         try {
             dispatch({ type: CatalogAction.ADD_CATALOG_REQUESTED })
-            const response = await axios.post(`${process.env.REACT_APP_API_URL}/catalog/add`, catalog);
+            const response = await axiosHttp.post(`${process.env.REACT_APP_API_URL}/catalog/add`, catalog);
             dispatch({ type: CatalogAction.ADD_CATALOG_SUCCESS, payload: { item: response.data } })
             message.success("Katalog berhasil ditambah");
         } catch ( error ) {
@@ -40,7 +40,7 @@ export function updateCatalogData(newCatalogData, catalog) {
     return async (dispatch, getState) => {
         try {
             dispatch({ type: CatalogAction.UPDATE_CATALOG_REQUESTED })
-            await axios.put(`${process.env.REACT_APP_API_URL}/catalog/update/${catalog.id}`, newCatalogData);
+            await axiosHttp.put(`${process.env.REACT_APP_API_URL}/catalog/update/${catalog.id}`, newCatalogData);
             const updatedCatalog = {
                 ...catalog,
                 ...newCatalogData
@@ -57,7 +57,7 @@ export function deleteCatalogData(catalog) {
     return async (dispatch, getState) => {
         try {
             dispatch({ type: CatalogAction.DELETE_CATALOG_REQUESTED })
-            await axios.delete(`${process.env.REACT_APP_API_URL}/catalog/${catalog.id}`);
+            await axiosHttp.delete(`${process.env.REACT_APP_API_URL}/catalog/${catalog.id}`);
             dispatch({ type: CatalogAction.DELETE_CATALOG_SUCCESS, payload: { item: catalog } })
             message.success("Katalog berhasil dihapus");
         } catch ( error ) {

@@ -6,7 +6,7 @@ const axiosHttp = axios.create({
 
 axiosHttp.interceptors.request.use(
     (config) => {
-        const response = '';
+        const response = localStorage.getItem('token');
         return {
             ...config,
             headers: {

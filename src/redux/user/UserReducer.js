@@ -3,11 +3,13 @@ import UserAction from "./UserAction";
 const initUserState = {
     isLoading: false,
     users: [],
+    currentUser: {}
 };
 
-export default function UserReducer(state = initUserState, {type, payload}) {
-    switch (type) {
+export default function UserReducer(state = initUserState, { type, payload }) {
+    switch ( type ) {
         case UserAction.LOAD_USER_REQUESTED:
+        case UserAction.LOAD_CURRENT_USER_REQUESTED:
         case UserAction.UPDATE_USER_REQUESTED: {
             return {
                 ...state,
@@ -40,6 +42,15 @@ export default function UserReducer(state = initUserState, {type, payload}) {
                 users: usersData
             }
         }
+
+        case UserAction.LOAD_CURRENT_USER_SUCCESS: {
+            return {
+                ...state,
+                isLoading: false,
+                currentUser: payload.user
+            }
+        }
+
         default:
             return state;
     }
