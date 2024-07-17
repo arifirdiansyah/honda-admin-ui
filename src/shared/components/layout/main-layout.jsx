@@ -114,5 +114,5 @@ const MainLayout = () => {
     );
 };
 export default withAuthenticationRequired(MainLayout, {
-    onRedirecting: () => <Loading/>
+    onRedirecting: () => <Loading loadingText="Sedang memuat..."/>
 });

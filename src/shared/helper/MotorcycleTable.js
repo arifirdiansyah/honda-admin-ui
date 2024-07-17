@@ -5,7 +5,7 @@ const MotorcycleColumns = (showModal, handleDeleteMotorcycle) => [
     {
         title: 'Model Kendaraan',
         dataIndex: 'catalogId',
-        width: 250,
+        width: 150,
         render: (_, { catalogId }) => (
             <>
                 {catalogId.modelName}
@@ -15,7 +15,7 @@ const MotorcycleColumns = (showModal, handleDeleteMotorcycle) => [
     {
         title: 'Tahun Perakitan',
         dataIndex: 'buildDate',
-        width: 250,
+        width: 80,
     },
     {
         title: 'Nomor Rangka',
@@ -30,7 +30,7 @@ const MotorcycleColumns = (showModal, handleDeleteMotorcycle) => [
     {
         title: 'Warna',
         dataIndex: 'color',
-        width: 250,
+        width: 120,
         render: (_, { color }) => (
             <>
                 <Tag>
@@ -54,11 +54,11 @@ const MotorcycleColumns = (showModal, handleDeleteMotorcycle) => [
     },
     {
         title: '',
-        width: 55,
+        width: 80,
         render: (data) => {
             return (
-                <div className="flex justify-between">
-                    <Button type="primary" icon={<EditOutlined/>} onClick={() => showModal(data)}/>
+                <div className="flex items-center justify-end">
+                    <Button type="primary" className="mr-2" icon={<EditOutlined/>} onClick={() => showModal(data)}/>
                     <Popconfirm
                         title="Hapus Kendaraan"
                         description="Anda yakin ingin melanjutkan?"

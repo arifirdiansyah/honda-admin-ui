@@ -5,7 +5,7 @@ const CatalogColumns = (showModal, handleDeleteCatalog) => [
     {
         title: 'Katalog',
         dataIndex: 'modelName',
-        width: 250,
+        width: 150,
     },
     {
         title: 'Transmisi',
@@ -48,15 +48,15 @@ const CatalogColumns = (showModal, handleDeleteCatalog) => [
     {
         title: 'Tipe Rangka',
         dataIndex: 'frame',
-        width: 350,
+        width: 200,
     },
     {
         title: '',
-        width: 50,
+        width: 80,
         render: (data) => {
             return (
-               <div className="flex justify-between">
-                   <Button type="primary" icon={<EditOutlined />} onClick={() => showModal(data)}/>
+               <div className="flex items-center justify-end">
+                   <Button type="primary" className="mr-2" icon={<EditOutlined />} onClick={() => showModal(data)}/>
                    <Popconfirm
                        title="Hapus Katalog"
                        description="Anda yakin ingin melanjutkan?"

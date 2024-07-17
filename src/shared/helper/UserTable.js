@@ -50,10 +50,10 @@ const UserColumns = (showModal) => [
     },
     {
         title: '',
-        width: 50,
+        width: 80,
         render: (data) => {
             return (
-                <div className="flex justify-between">
+                <div className="flex justify-end items-center">
                     <Button type="primary" icon={<EditOutlined/>} onClick={() => showModal(data)}/>
                 </div>
             )

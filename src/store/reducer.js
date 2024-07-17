@@ -5,6 +5,7 @@ import PartReducer from './../redux/part/PartReducer';
 import UserReducer from './../redux/user/UserReducer';
 import DealershipReducer from './../redux/dealership/DealershipReducer';
 import ServicePackageReducer from './../redux/service-package/ServicePackageReducer';
+import ServiceReducer from './../redux/service/ServiceReducer';
 
 const rootReducer = combineReducers({
     CatalogueReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     PartReducer,
     UserReducer,
     DealershipReducer,
-    ServicePackageReducer
+    ServicePackageReducer,
+    ServiceReducer
 });
 
 export default rootReducer;

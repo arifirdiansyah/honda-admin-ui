@@ -9,6 +9,7 @@ import DealershipPage from "../pages/DealershipPage";
 import { ServicePackagePage } from "../pages/ServicePackagePage";
 import { ServicePage } from "../pages/ServicePage";
 import HomePage from "../pages/HomePage";
+import { ServiceDetailsPage } from "../pages/ServiceDetailPage";
 
 const router = createBrowserRouter([
     {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
             {
                 path: "service",
                 element: <ServicePage/>,
+            },
+            {
+                path: "service-detail/:serviceId",
+                element: <ServiceDetailsPage/>,
             },
         ]
     },

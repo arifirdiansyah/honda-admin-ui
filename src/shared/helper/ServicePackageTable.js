@@ -30,7 +30,7 @@ const PackageServiceColumns = (showModal, handleDeletePart) => [
         width: 55,
         render: (data) => {
             return (
-                <div className="flex justify-start">
+                <div className="flex justify-end items-center">
                     <Button className="mr-2" type="primary" icon={<EditOutlined/>} onClick={() => showModal(data)}/>
                     <Popconfirm
                         title="Hapus Paket Service"
