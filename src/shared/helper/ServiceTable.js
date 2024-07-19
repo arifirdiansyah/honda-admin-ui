@@ -27,7 +27,7 @@ const ServiceColumns = (editService, handleDeleteService) => [
     },
     {
         title: 'Total Harga',
-        dataIndex: 'fee',
+        dataIndex: 'totalPrice',
         width: 150,
     },
     {

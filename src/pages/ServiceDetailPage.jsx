@@ -121,7 +121,7 @@ export const ServiceDetailsPage = () => {
             replacedParts: replacedParts,
             servicePackage: servicePackageId,
             motorcycleId: motorcycleId,
-            fee: countTotalPrice()
+            totalPrice: countTotalPrice()
         }
         dispatch(updateServiceData(serviceData));
     };
@@ -133,14 +133,14 @@ export const ServiceDetailsPage = () => {
     const countTotalPrice= () => {
         let total = 0;
 
-        serviceSelector.serviceDetail.replacedParts.forEach(partList => {
-           total += partList.quantity * partList.part.price;
+        get(serviceSelector.serviceDetail, 'replacedParts', []).forEach(partList => {
+           total += Number(partList.quantity) * Number(partList.part.price);
         });
-        total += serviceSelector.serviceDetail.fee;
+        total += Number(get(serviceSelector.serviceDetail, 'fee', 0));
 
-        const tax = (100 * 11) / total;
 
-        return (total + tax).toFixed(0);
+
+        return Number(total).toFixed(0)
     }
 
     return (
@@ -337,7 +337,7 @@ export const ServiceDetailsPage = () => {
                 </div>
                 <div className="h-16 bg-gray-200 flex justify-between items-center px-10 mt-5">
                     <div className="">
-                        <span className="text-xl font-bold mr-5">Total Harga (ppn 11%):</span>
+                        <span className="text-xl font-bold mr-5">Total Harga:</span>
                         <span className="text-2xl font-bold">{countTotalPrice()}</span>
                     </div>
                     <div>

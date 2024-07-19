@@ -19,6 +19,8 @@ const DealershipPage = () => {
     const showDealershipModal = (dealershipData) => {
         formDealership.setFieldsValue({
             name: dealershipData && dealershipData.name ? dealershipData.name : '',
+            photo: dealershipData && dealershipData.photo ? dealershipData.photo : '',
+            phone: dealershipData && dealershipData.phone ? dealershipData.phone : '',
             provinces: dealershipData && dealershipData.address ? dealershipData.address.provinces : '',
             city: dealershipData && dealershipData.address ? dealershipData.address.city : '',
             subdistrict: dealershipData && dealershipData.address ? dealershipData.address.subdistrict : '',
@@ -34,6 +36,8 @@ const DealershipPage = () => {
     const submitFormDealership = (value) => {
         const dealerModel = {
             name: value.name,
+            photo: value.photo,
+            phone: value.phone,
             address: {
                 provinces: value.provinces,
                 city: value.city,
@@ -76,6 +80,30 @@ const DealershipPage = () => {
                         <Form.Item
                             label="Nama Dealer"
                             name="name"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Tidak boleh kosong!',
+                                },
+                            ]}
+                        >
+                            <Input size="large"/>
+                        </Form.Item>
+                        <Form.Item
+                            label="Photo"
+                            name="photo"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Tidak boleh kosong!',
+                                },
+                            ]}
+                        >
+                            <Input size="large"/>
+                        </Form.Item>
+                        <Form.Item
+                            label="Phone"
+                            name="phone"
                             rules={[
                                 {
                                     required: true,
