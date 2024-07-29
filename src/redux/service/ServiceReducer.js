@@ -77,6 +77,7 @@ export default function ServiceReducer(state = initPartState, { type, payload })
                     mileage: payload.item.mileage,
                     description: payload.item.description,
                     fee: payload.item.fee,
+                    nama: payload.item.nama
                 }
             }
         }

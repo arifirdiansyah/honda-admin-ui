@@ -6,7 +6,6 @@ const ServiceDetailColumns = (handleDeletePart) => [
         title: 'Nomor Suku Cadang',
         width: 150,
         render: (_, {part}) => {
-            console.log(part);
             return (<span>{part.partNumber}</span>)
         }
     },
@@ -14,7 +13,6 @@ const ServiceDetailColumns = (handleDeletePart) => [
         title: 'Nama Suku Cadang',
         width: 150,
         render: (_, {part}) => {
-            console.log(part);
             return (<span>{part.partName}</span>)
         }
     },
@@ -22,7 +20,6 @@ const ServiceDetailColumns = (handleDeletePart) => [
         title: 'Harga',
         width: 150,
         render: (_, {part}) => {
-            console.log(part);
             return (<span>{part.price}</span>)
         }
     },

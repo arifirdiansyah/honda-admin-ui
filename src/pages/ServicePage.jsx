@@ -45,7 +45,8 @@ export const ServicePage = () => {
             description: '',
             totalPrice: 0,
             serviceDate: '',
-            replacedParts: []
+            replacedParts: [],
+            nama: ''
         })
         setServiceModal({ modalOpen: true });
     };
@@ -141,6 +142,16 @@ export const ServicePage = () => {
                     <Form.Item
                         label="Nama Teknisi"
                         name="technician"
+                        rules={[{
+                            required: true, message: 'Tidak boleh kosong!',
+                        },]}
+                    >
+                        <Input size="large" disabled={!serviceSelector.selectedMotorcycle}/>
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Nama Pemilik"
+                        name="nama"
                         rules={[{
                             required: true, message: 'Tidak boleh kosong!',
                         },]}

@@ -3,13 +3,18 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 const ServiceColumns = (editService, handleDeleteService) => [
     {
-        title: 'Nomor Rangka',
+        title: 'Plat Nomor',
         width: 150,
         render: (_, { motorcycleId }) => (
             <>
                 {motorcycleId.vin.toUpperCase()}
             </>
         ),
+    },
+    {
+        title: 'Nama Pemilik',
+        width: 150,
+        dataIndex: 'nama'
     },
     {
         title: 'Jenis Kendaraan',

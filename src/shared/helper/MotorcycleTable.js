@@ -12,21 +12,23 @@ const MotorcycleColumns = (showModal, handleDeleteMotorcycle) => [
             </>
         ),
     },
+
     {
         title: 'Tahun Perakitan',
         dataIndex: 'buildDate',
-        width: 80,
+        width: 100,
     },
     {
-        title: 'Nomor Rangka',
+        title: 'Plat Nomor',
         dataIndex: 'vin',
-        width: 250,
+        width: 200,
         render: (_, { vin }) => (
             <>
                 {vin.toUpperCase()}
             </>
         ),
     },
+   
     {
         title: 'Warna',
         dataIndex: 'color',

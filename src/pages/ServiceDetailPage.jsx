@@ -38,7 +38,8 @@ export const ServiceDetailsPage = () => {
             serviceDate: dayjs(get(serviceSelector.serviceDetail, 'serviceDate'), dateFormat),
             mileage: get(serviceSelector.serviceDetail, 'mileage', ''),
             description: get(serviceSelector.serviceDetail, 'description', ''),
-            fee: get(serviceSelector.serviceDetail, 'fee', '')
+            fee: get(serviceSelector.serviceDetail, 'fee', ''),
+            nama: get(serviceSelector.serviceDetail, 'nama', '')
         })
         setServiceModal({ modalOpen: true });
     };
@@ -86,6 +87,7 @@ export const ServiceDetailsPage = () => {
     };
 
     const submitFormService = (value) => {
+        console.log(value);
         setServiceModal({ modalOpen: false });
         value.serviceDate = serviceDate ? serviceDate : get(serviceSelector.serviceDetail, 'serviceDate');
         value.servicePackage = servicePackages.servicePackages.find(sp => sp.id === value.servicePackage);
@@ -193,6 +195,16 @@ export const ServiceDetailsPage = () => {
                             <Input size="large"/>
                         </Form.Item>
 
+                        <Form.Item
+                        label="Nama Pemilik"
+                        name="nama"
+                        rules={[{
+                            required: true, message: 'Tidak boleh kosong!',
+                        },]}
+                    >
+                        <Input size="large"/>
+                    </Form.Item>
+
                         <div className="flex justify-between w-full">
                             <Form.Item
                                 label="Kilometer"
@@ -280,8 +292,12 @@ export const ServiceDetailsPage = () => {
                         <div className="flex w-full gap-10">
                             <div className="felx flex-col w-2/12 sm:w-1/3">
                                 <div className="flex justify-between">
-                                    <span className="font-bold flex-grow">Nomor Rangka</span>
+                                    <span className="font-bold flex-grow">Plat Nomor</span>
                                     <span>{get(serviceSelector.serviceDetail, 'motorcycleId.vin', '')}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="font-bold flex-grow">Nama Pemilik</span>
+                                    <span>{get(serviceSelector.serviceDetail, 'nama', '')}</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="font-bold flex-grow">Jenis Kendaraan</span>

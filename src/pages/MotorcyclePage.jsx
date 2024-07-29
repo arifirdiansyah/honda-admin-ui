@@ -26,6 +26,7 @@ const MotorcyclePage = () => {
             vin: motorcycleData ? motorcycleData.vin : '',
             color: motorcycleData ? motorcycleData.color : '',
             cover: motorcycleData ? motorcycleData.cover : '',
+           
         })
         setMotorcycleModal({ modalOpen: true, data: motorcycleData });
     };
@@ -102,7 +103,7 @@ const MotorcyclePage = () => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Nomor Rangka"
+                        label="Plat Nomor"
                         name="vin"
                         rules={[{
                             required: true, message: 'Tidak boleh kosong!',
