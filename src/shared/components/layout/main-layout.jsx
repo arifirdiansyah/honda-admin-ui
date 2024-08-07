@@ -51,6 +51,9 @@ const MainLayout = () => {
             case '12':
                 navigate('/dealership/service');
                 break;
+            case '13':
+                navigate('/dealership/motorcycles');
+                break;
             default:
                 break;
         }
@@ -62,7 +65,7 @@ const MainLayout = () => {
     }
 
     return (
-        <div className="w-screen h-screen">
+        <div className="w-screen h-screen"> 
             <Layout className="h-full">
                 <Sider trigger={null} collapsible collapsed={collapsed} className="flex flex-col">
                     <div className="flex justify-center items-center mb-2 px-2 py-5">

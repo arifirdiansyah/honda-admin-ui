@@ -21,7 +21,7 @@ const MotorcycleColumns = (showModal, handleDeleteMotorcycle) => [
     {
         title: 'Plat Nomor',
         dataIndex: 'vin',
-        width: 200,
+        width: 100,
         render: (_, { vin }) => (
             <>
                 {vin.toUpperCase()}
@@ -44,7 +44,7 @@ const MotorcycleColumns = (showModal, handleDeleteMotorcycle) => [
     {
         title: 'Foto',
         dataIndex: 'cover',
-        width: 150,
+        width: 100,
         render: (_, { cover }) => (
             <>
                 <Image

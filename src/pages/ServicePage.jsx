@@ -105,13 +105,13 @@ export const ServicePage = () => {
                     onFinish={submitFormService}
                 >
                     <Form.Item
-                        label="Nomor Rangka Kendaraan"
+                        label="Plat Nomor Kendaraan"
                         name="motorcycleId"
                         rules={[{
                             required: true, message: 'Tidak boleh kosong!',
                         },]}
                     >
-                        <Search placeholder="Nomor Rangka" size="large" onSearch={findMotorCycleByVin} enterButton/>
+                        <Search placeholder="Plat Nomor" size="large" onSearch={findMotorCycleByVin} enterButton/>
                     </Form.Item>
 
                     <Form.Item

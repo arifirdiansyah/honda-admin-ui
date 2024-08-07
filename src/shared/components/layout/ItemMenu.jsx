@@ -63,6 +63,11 @@ export const ItemMenu = ({ userRole, onNavigatePage }) => {
                         icon: <PartitionOutlined />,
                         label: 'Service',
                     },
+                    {
+                        key: '13',
+                        icon: <CarOutlined/>,
+                        label: 'Sepeda Motor',
+                    },
                 ]}
             />);
         }
