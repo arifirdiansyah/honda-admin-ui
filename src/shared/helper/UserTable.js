@@ -23,9 +23,6 @@ const UserColumns = (showModal) => [
                 case 'SUPER_ADMIN':
                     color = 'red';
                     break;
-                case 'ADMIN':
-                    color = 'green';
-                    break;
                 case 'DEALER_ADMIN':
                     color = 'blue';
                     break;

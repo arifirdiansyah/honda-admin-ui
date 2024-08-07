@@ -11,6 +11,14 @@ import { getAllServicePackage } from "../shared/services/servciePackageService";
 import ServiceAction from "../redux/service/ServiceAction";
 import { getAllPart } from "../shared/services/partService";
 
+const formatRupiah = (angka) => {
+    return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0
+    }).format(angka);
+};
+
 export const ServiceDetailsPage = () => {
     const dispatch = useDispatch();
     let params = useParams();
@@ -30,7 +38,6 @@ export const ServiceDetailsPage = () => {
         dispatch(getServiceDataById(params.serviceId));
     }, [params, dispatch]);
 
-
     const showServiceModal = () => {
         formService.setFieldsValue({
             servicePackage: get(serviceSelector.serviceDetail, 'servicePackage.id', ''),
@@ -40,7 +47,7 @@ export const ServiceDetailsPage = () => {
             description: get(serviceSelector.serviceDetail, 'description', ''),
             fee: get(serviceSelector.serviceDetail, 'fee', ''),
             nama: get(serviceSelector.serviceDetail, 'nama', '')
-        })
+        });
         setServiceModal({ modalOpen: true });
     };
 
@@ -50,14 +57,14 @@ export const ServiceDetailsPage = () => {
             part: ''
         });
         setAddPartModal({ modalOpen: true });
-    }
+    };
 
     const cancelAddPartModal = () => {
         setAddPartModal({ modalOpen: false });
-    }
+    };
 
     const addPartToList = (value) => {
-        dispatch({ type: ServiceAction.ADD_PART_TO_SERVICE_DETAIL_REQUESTED, payload: {} })
+        dispatch({ type: ServiceAction.ADD_PART_TO_SERVICE_DETAIL_REQUESTED, payload: {} });
 
         setTimeout(() => {
             const addedPart = partSelector.parts.find(part => part.id === value.part);
@@ -76,10 +83,10 @@ export const ServiceDetailsPage = () => {
                 });
             }
 
-            dispatch({ type: ServiceAction.ADD_PART_TO_SERVICE_DETAIL_SUCCESS, payload: { item: replacedPart } })
+            dispatch({ type: ServiceAction.ADD_PART_TO_SERVICE_DETAIL_SUCCESS, payload: { item: replacedPart } });
             setAddPartModal({ modalOpen: false });
         }, 100);
-    }
+    };
 
     const handleCancelModal = () => {
         setServiceModal({ modalOpen: false });
@@ -91,30 +98,30 @@ export const ServiceDetailsPage = () => {
         setServiceModal({ modalOpen: false });
         value.serviceDate = serviceDate ? serviceDate : get(serviceSelector.serviceDetail, 'serviceDate');
         value.servicePackage = servicePackages.servicePackages.find(sp => sp.id === value.servicePackage);
-        dispatch({ type: ServiceAction.SET_CURRENT_SERVICE_DETAIL, payload: { item: value } })
-    }
+        dispatch({ type: ServiceAction.SET_CURRENT_SERVICE_DETAIL, payload: { item: value } });
+    };
 
     const onServiceDateChange = (date, dateString) => {
         setServiceDate(dateString);
-    }
+    };
 
     const handleDeletePart = (deletedPart) => {
-        dispatch({ type: ServiceAction.ADD_PART_TO_SERVICE_DETAIL_REQUESTED })
+        dispatch({ type: ServiceAction.ADD_PART_TO_SERVICE_DETAIL_REQUESTED });
 
         setTimeout(() => {
             const parts = serviceSelector.serviceDetail.replacedParts.filter(partList => partList.part.id !== deletedPart.part.id);
 
-            dispatch({ type: ServiceAction.ADD_PART_TO_SERVICE_DETAIL_SUCCESS, payload: { item: parts } })
+            dispatch({ type: ServiceAction.ADD_PART_TO_SERVICE_DETAIL_SUCCESS, payload: { item: parts } });
             setAddPartModal({ modalOpen: false });
         }, 100);
-    }
+    };
 
     const saveServiceData = () => {
         const replacedParts = serviceSelector.serviceDetail.replacedParts.map(partList => {
             return {
                 ...partList,
                 part: partList.part.id,
-            }
+            };
         });
         const servicePackageId = serviceSelector.serviceDetail.servicePackage.id;
         const motorcycleId = serviceSelector.serviceDetail.motorcycleId.id;
@@ -124,26 +131,24 @@ export const ServiceDetailsPage = () => {
             servicePackage: servicePackageId,
             motorcycleId: motorcycleId,
             totalPrice: countTotalPrice()
-        }
+        };
         dispatch(updateServiceData(serviceData));
     };
 
     const backToServiceList = () => {
         navigate('/dealership/service');
-    }
+    };
 
-    const countTotalPrice= () => {
+    const countTotalPrice = () => {
         let total = 0;
 
         get(serviceSelector.serviceDetail, 'replacedParts', []).forEach(partList => {
-           total += Number(partList.quantity) * Number(partList.part.price);
+            total += Number(partList.quantity) * Number(partList.part.price);
         });
         total += Number(get(serviceSelector.serviceDetail, 'fee', 0));
 
-
-
-        return Number(total).toFixed(0)
-    }
+        return Number(total).toFixed(0);
+    };
 
     return (
         <>
@@ -180,7 +185,7 @@ export const ServiceDetailsPage = () => {
                                             key: key,
                                             value: servicePackage.id,
                                             label: servicePackage.packageName,
-                                        }
+                                        };
                                     })}
                             />
                         </Form.Item>
@@ -279,7 +284,7 @@ export const ServiceDetailsPage = () => {
                                             key: key,
                                             value: part.id,
                                             label: part.partName,
-                                        }
+                                        };
                                     })}
                             />
                         </Form.Item>
@@ -333,7 +338,7 @@ export const ServiceDetailsPage = () => {
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="font-bold flex-grow">Biaya Jasa (Rp.)</span>
-                                    <span>{get(serviceSelector.serviceDetail, 'fee', 0)}</span>
+                                    <span>{formatRupiah(get(serviceSelector.serviceDetail, 'fee', 0))}</span>
                                 </div>
                             </div>
                             <div>
@@ -354,7 +359,7 @@ export const ServiceDetailsPage = () => {
                 <div className="h-16 bg-gray-200 flex justify-between items-center px-10 mt-5">
                     <div className="">
                         <span className="text-xl font-bold mr-5">Total Harga:</span>
-                        <span className="text-2xl font-bold">{countTotalPrice()}</span>
+                        <span className="text-2xl font-bold">{formatRupiah(countTotalPrice())}</span>
                     </div>
                     <div>
                         <Button danger size="large" className="mr-5" onClick={backToServiceList}>Batalkan</Button>
@@ -363,5 +368,5 @@ export const ServiceDetailsPage = () => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};

@@ -1,5 +1,13 @@
-import { Button, Popconfirm, Tag } from "antd";
+import { Button, Popconfirm } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+
+const formatRupiah = (angka) => {
+    return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0
+    }).format(angka);
+};
 
 const ServiceColumns = (editService, handleDeleteService) => [
     {
@@ -34,6 +42,7 @@ const ServiceColumns = (editService, handleDeleteService) => [
         title: 'Total Harga',
         dataIndex: 'totalPrice',
         width: 150,
+        render: (text) => formatRupiah(text), // Menggunakan fungsi formatRupiah
     },
     {
         title: 'Keterangan',

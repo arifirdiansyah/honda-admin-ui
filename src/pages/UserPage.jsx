@@ -105,7 +105,7 @@ const UserPage = () => {
                         >
                             <Select size="large" onSelect={roleSelected}>
                                 <Select.Option value="SUPER_ADMIN">Super Admin</Select.Option>
-                                <Select.Option value="ADMIN">Admin</Select.Option>
+            
                                 <Select.Option value="DEALER_ADMIN">Dealer Admin</Select.Option>
                                 <Select.Option value="CUSTOMER">Customer</Select.Option>
                             </Select>
