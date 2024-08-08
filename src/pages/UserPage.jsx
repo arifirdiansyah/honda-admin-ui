@@ -24,12 +24,16 @@ const UserPage = () => {
             picture: userData ? userData.picture : '',
             role: userData ? userData.role : '',
             status: userData ? userData.status : '',
-        })
+            phoneNumber: userData ? userData.phoneNumber : '', // Set nomor HP
+            address: userData ? userData.address : '', // Set alamat
+        });
         setUserModal({ modalOpen: true, data: userData });
+        setSelectedRole(userData ? userData.role : null); // Set role yang dipilih
     };
 
     const handleCancelModal = () => {
         setUserModal({ modalOpen: false, data: null });
+        setSelectedRole(null);
     };
 
     const submitFormUser = (value) => {
@@ -37,10 +41,14 @@ const UserPage = () => {
             if (selectedRole !== 'DEALER_ADMIN') {
                 value.dealer = null;
             }
+            if (selectedRole !== 'CUSTOMER') {
+                value.phoneNumber = null;
+                value.address = null;
+            }
             dispatch(updateUserData(value, userModal.data));
             setUserModal({ modalOpen: false, data: null });
         }
-    }
+    };
 
     const roleSelected = (value) => {
         setSelectedRole(value);
@@ -77,7 +85,7 @@ const UserPage = () => {
                                 },
                             ]}
                         >
-                            <Input size="large"/>
+                            <Input size="large" />
                         </Form.Item>
 
                         <Form.Item
@@ -90,7 +98,7 @@ const UserPage = () => {
                                 },
                             ]}
                         >
-                            <Input size="large" disabled/>
+                            <Input size="large" disabled />
                         </Form.Item>
 
                         <Form.Item
@@ -105,11 +113,40 @@ const UserPage = () => {
                         >
                             <Select size="large" onSelect={roleSelected}>
                                 <Select.Option value="SUPER_ADMIN">Super Admin</Select.Option>
-            
                                 <Select.Option value="DEALER_ADMIN">Dealer Admin</Select.Option>
                                 <Select.Option value="CUSTOMER">Customer</Select.Option>
                             </Select>
                         </Form.Item>
+
+                        {selectedRole === 'CUSTOMER' && (
+                            <>
+                                <Form.Item
+                                    label="Nomor HP"
+                                    name="phoneNumber"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Tidak boleh kosong!',
+                                        },
+                                    ]}
+                                >
+                                    <Input size="large" />
+                                </Form.Item>
+
+                                <Form.Item
+                                    label="Alamat"
+                                    name="address"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message: 'Tidak boleh kosong!',
+                                        },
+                                    ]}
+                                >
+                                    <Input size="large" />
+                                </Form.Item>
+                            </>
+                        )}
 
                         <Form.Item
                             shouldUpdate={true}
@@ -135,7 +172,7 @@ const UserPage = () => {
                                             key: key,
                                             value: dealer.id,
                                             label: dealer.name,
-                                        }
+                                        };
                                     })}
                             />
                         </Form.Item>
@@ -149,7 +186,7 @@ const UserPage = () => {
                                 },
                             ]}
                         >
-                            <Input size="large"/>
+                            <Input size="large" />
                         </Form.Item>
                     </Form>
                 </div>
@@ -163,9 +200,8 @@ const UserPage = () => {
                         marginLeft: 10,
                     }}
                     onClick={() => {
-                        dispatch(getAllUsers())
-                    }} icon={<ReloadOutlined/>}/>
-
+                        dispatch(getAllUsers());
+                    }} icon={<ReloadOutlined />} />
             </div>
             <Table
                 columns={UserColumns(showUserModal)}
