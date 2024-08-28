@@ -29,11 +29,21 @@ export const ServicePage = () => {
     const servicePackages = useSelector(state => state.ServicePackageReducer);
     const serviceSelector = useSelector(state => state.ServiceReducer);
     const [serviceDate, setServiceDate] = useState('');
+    const [nextServiceDate, setNextServiceDate] = useState('');
 
     useEffect(() => {
         dispatch(getAllServicePackage())
         dispatch(getAllService())
     }, [dispatch]);
+
+    useEffect(() => {
+        if(serviceSelector.selectedMotorcycle) {
+            formService.setFieldsValue({
+                mileage: get(serviceSelector.selectedMotorcycle, 'service.mileage', 0),
+                nama: get(serviceSelector.selectedMotorcycle, 'service.nama', '')
+            })
+        }
+    }, [serviceSelector]);
 
     const showServiceModal = () => {
         dispatch({ type: ServiceAction.FIND_MOTORCYCLE_SUCCESS, payload: { item: null } })
@@ -45,6 +55,7 @@ export const ServicePage = () => {
             description: '',
             totalPrice: 0,
             serviceDate: '',
+            nextServiceDate: '',
             replacedParts: [],
             nama: ''
         })
@@ -65,7 +76,8 @@ export const ServicePage = () => {
             }
         });
         value.serviceDate = serviceDate;
-        value.motorcycleId = serviceSelector.selectedMotorcycle.id;
+        value.nextServiceDate = nextServiceDate;
+        value.motorcycleId = serviceSelector.selectedMotorcycle.motorCycle.id;
         dispatch(addServiceData({ ...value, totalPrice: 0 }));
     }
 
@@ -78,6 +90,10 @@ export const ServicePage = () => {
 
     const onServiceDateChange = (date, dateString) => {
         setServiceDate(dateString);
+    }
+    const onNextServiceDateChange = (date, dateString) => {
+        setNextServiceDate(dateString);
+        console.log(formService.getFieldsValue());
     }
 
     const navigateToServiceDetail = (service) => {
@@ -181,7 +197,16 @@ export const ServicePage = () => {
                                         onChange={onServiceDateChange}/>
                         </Form.Item>
                     </div>
-
+                    <Form.Item
+                            label="Tanggal Service selanjutnya"
+                            name="nextServiceDate"
+                            rules={[{
+                                required: true, message: 'Tidak boleh kosong!',
+                            },]}
+                        >
+                            <DatePicker size="large" disabled={!serviceSelector.selectedMotorcycle}
+                                        onChange={onNextServiceDateChange}/>
+                        </Form.Item>
                     <Form.Item
                         label="Keterangan"
                         name="description"

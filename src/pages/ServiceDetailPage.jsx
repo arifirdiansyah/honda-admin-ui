@@ -31,6 +31,7 @@ export const ServiceDetailsPage = () => {
     const [formService] = Form.useForm();
     const [formAddPart] = Form.useForm();
     const [serviceDate, setServiceDate] = useState('');
+    const [nextServiceDate, setNextServiceDate] = useState('');
     const dateFormat = 'YYYY-MM-DD';
 
     useEffect(() => {
@@ -43,6 +44,7 @@ export const ServiceDetailsPage = () => {
             servicePackage: get(serviceSelector.serviceDetail, 'servicePackage.id', ''),
             technician: get(serviceSelector.serviceDetail, 'technician', ''),
             serviceDate: dayjs(get(serviceSelector.serviceDetail, 'serviceDate'), dateFormat),
+            nextServiceDate: dayjs(get(serviceSelector.serviceDetail, 'nextServiceDate'), dateFormat),
             mileage: get(serviceSelector.serviceDetail, 'mileage', ''),
             description: get(serviceSelector.serviceDetail, 'description', ''),
             fee: get(serviceSelector.serviceDetail, 'fee', ''),
@@ -103,6 +105,10 @@ export const ServiceDetailsPage = () => {
 
     const onServiceDateChange = (date, dateString) => {
         setServiceDate(dateString);
+    };
+
+    const onNextServiceDateChange = (date, dateString) => {
+        setNextServiceDate(dateString);
     };
 
     const handleDeletePart = (deletedPart) => {
@@ -241,7 +247,15 @@ export const ServiceDetailsPage = () => {
                                 <DatePicker size="large" onChange={onServiceDateChange}/>
                             </Form.Item>
                         </div>
-
+                        <Form.Item
+                                label="Tanggal Service Selanjutnya"
+                                name="nextServiceDate"
+                                rules={[{
+                                    required: true, message: 'Tidak boleh kosong!',
+                                },]}
+                            >
+                                <DatePicker size="large" onChange={onNextServiceDateChange}/>
+                            </Form.Item>
                         <Form.Item
                             label="Keterangan"
                             name="description"
@@ -331,6 +345,10 @@ export const ServiceDetailsPage = () => {
                                 <div className="flex justify-between">
                                     <span className="font-bold flex-grow">Tanggal Service</span>
                                     <span>{get(serviceSelector.serviceDetail, 'serviceDate', '')}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="font-bold flex-grow">Tanggal Service Selanjutnya</span>
+                                    <span>{get(serviceSelector.serviceDetail, 'nextServiceDate', '')}</span>
                                 </div>
                                 <div className="flex justify-between">
                                     <span className="font-bold flex-grow">Kilometer (KM)</span>
